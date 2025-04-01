@@ -20,16 +20,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import Link from "next/link";
 interface User {
   discord_user_id: string;
   student_number: string;
   first_name: string;
   last_name: string;
+  campus_user_id: string;
 }
 
 function AddUserModal() {
@@ -158,7 +157,7 @@ export default function AttendancePage() {
       const { data, error } = await supabase
         .from("system_users")
         .select("*")
-        .not("discord_user_id", "is", null)
+        // .not("discord_user_id", "is", null)
         .not("campus_user_id", "is", null);
 
       if (error) {
@@ -196,8 +195,8 @@ export default function AttendancePage() {
     }
     toast(
       `${checkedIn.has(userId) ? "Checked out" : "Checked in"} ${
-        users.find((user) => user.discord_user_id === userId)?.first_name
-      } ${users.find((user) => user.discord_user_id === userId)?.last_name}`,
+        users.find((user) => user.campus_user_id === userId)?.first_name
+      } ${users.find((user) => user.campus_user_id === userId)?.last_name}`,
       {}
     );
   };
@@ -220,24 +219,24 @@ export default function AttendancePage() {
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Student Number</TableHead>
-              <TableHead>Discord ID</TableHead>
+              <TableHead>Campus ID</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredUsers.map((user) => (
-              <TableRow key={user.discord_user_id}>
+              <TableRow key={user.campus_user_id}>
                 <TableCell className="font-medium">
                   {user.first_name} {user.last_name}
                 </TableCell>
                 <TableCell>{user.student_number}</TableCell>
-                <TableCell>{user.discord_user_id}</TableCell>
+                <TableCell>{user.campus_user_id}</TableCell>
                 <TableCell className="flex gap-2 justify-end">
                   <EditUserModal user={user} />
-                  {checkedIn.has(user.discord_user_id) ? (
+                  {checkedIn.has(user.campus_user_id) ? (
                     <Button
                       variant="default"
-                      onClick={() => toggleCheckIn(user.discord_user_id)}
+                      onClick={() => toggleCheckIn(user.campus_user_id)}
                       className="w-24"
                     >
                       Check Out
@@ -245,7 +244,7 @@ export default function AttendancePage() {
                   ) : (
                     <Button
                       variant="outline"
-                      onClick={() => toggleCheckIn(user.discord_user_id)}
+                      onClick={() => toggleCheckIn(user.campus_user_id)}
                       className="w-24"
                     >
                       Check In
