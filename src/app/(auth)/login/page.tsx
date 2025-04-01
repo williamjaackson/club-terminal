@@ -1,3 +1,3 @@
 export default function LoginPage() {
-  return <div>Login</div>;
+  return <div>You cannot access this resource unless you are signed in.</div>;
 }
