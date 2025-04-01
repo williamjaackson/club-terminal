@@ -9,7 +9,7 @@ export function SignInButton() {
     await supabase.auth.signInWithOAuth({
       provider: "discord",
       options: {
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo: `${location.origin}/callback`,
       },
     });
   };
