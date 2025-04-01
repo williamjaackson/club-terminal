@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { toast } from "sonner";
 
 interface User {
   discord_user_id: string;
@@ -68,6 +69,11 @@ export default function AttendancePage() {
         return newSet;
       });
     }
+    toast(
+      `${checkedIn.has(userId) ? "Checked out" : "Checked in"} ${
+        users.find((user) => user.discord_user_id === userId)?.first_name
+      } ${users.find((user) => user.discord_user_id === userId)?.last_name}`
+    );
   };
 
   return (
