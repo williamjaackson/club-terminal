@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SquareTerminal } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { AuthButton } from "@/components/auth/AuthButton";
 
 export function Navbar() {
   return (
@@ -13,7 +13,7 @@ export function Navbar() {
               Club Terminal
             </Link>
           </div>
-          <Button variant="outline">Log in</Button>
+          <AuthButton />
         </div>
       </div>
     </nav>
