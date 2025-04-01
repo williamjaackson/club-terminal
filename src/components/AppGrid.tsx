@@ -38,7 +38,7 @@ export function AppGrid() {
           }`}
         >
           {!app.disabled ? (
-            <Link href={app.href} className="contents">
+            <Link href={`/apps${app.href}`} className="contents">
               <AppContent app={app} />
             </Link>
           ) : (
