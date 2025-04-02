@@ -14,7 +14,7 @@ const apps = [
     icon: CalendarDays,
     href: "/events",
     description: "Organize and manage club events",
-    disabled: true,
+    disabled: false,
   },
   {
     name: "Redirects",

@@ -30,6 +30,8 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.0.17",
+    "lightningcss-linux-x64-gnu": "^1.29.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
