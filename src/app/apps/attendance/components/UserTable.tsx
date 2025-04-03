@@ -16,9 +16,10 @@ import { User } from "./User";
 import { EditUserModal } from "./EditUserModal";
 import { AddUserModal } from "./AddUserModal";
 import { useUsers } from "../hooks/useUsers";
+import { LoadingState } from "@/components/LoadingState";
 
 export function UserTable() {
-  const { users } = useUsers();
+  const { users, isLoading } = useUsers();
   const [searchQuery, setSearchQuery] = useState("");
   const [checkedIn, setCheckedIn] = useState<Set<string>>(new Set());
 
@@ -51,6 +52,10 @@ export function UserTable() {
       {}
     );
   };
+
+  if (isLoading) {
+    return <LoadingState text="Loading users..." />;
+  }
 
   return (
     <div className="space-y-2">
