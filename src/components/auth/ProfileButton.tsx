@@ -19,7 +19,7 @@ export function ProfileButton({ user }: { user: User }) {
             src={user.user_metadata.avatar_url}
             alt="Profile"
             width={25}
-            height={32}
+            height={25}
             className="rounded-full"
           />
         )}
