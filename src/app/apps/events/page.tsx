@@ -32,7 +32,5 @@ interface Event {
 }
 
 export default function EventsPage() {
-  return (
-      <p>hello</p>
-  )
+  return <p>hello</p>;
 }
