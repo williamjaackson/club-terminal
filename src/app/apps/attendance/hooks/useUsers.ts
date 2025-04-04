@@ -13,6 +13,7 @@ export function useUsers() {
       setIsLoading(true);
       const supabase = createClient();
 
+      // NO SYSTEM_USERS ANYMORE
       const { data, error } = await supabase
         .from("system_users")
         .select("*")
