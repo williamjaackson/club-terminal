@@ -34,3 +34,38 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Database Tables
+
+griffith_students
+• student_number TEXT PK
+
+connected_discord_users
+• id TEXT PK
+• student_number TEXT FK→griffith_students.student_number
+
+campus_users
+• id TEXT PK
+• student_number TEXT FK→griffith_students.student_number
+• first_name TEXT  
+• last_name TEXT
+• email TEXT
+
+clubs
+• id TEXT PK
+• name TEXT
+• acronym TEXT
+
+club_members
+• id int8 PK
+• campus_user int8 FK→campus_users.id
+• club int8 FK→clubs.id
+• executive BOOL
+
+---
+
+events
+• id UUID PK
+• name TEXT
+• description TEXT
+• host int8 FK→clubs.id
