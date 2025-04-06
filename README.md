@@ -38,34 +38,40 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## Database Tables
 
 griffith_students
-• student_number TEXT PK
+
+- student_number TEXT PK
 
 connected_discord_users
-• id TEXT PK
-• student_number TEXT FK→griffith_students.student_number
+
+- id TEXT PK
+- student_number TEXT FK→griffith_students.student_number
 
 campus_users
-• id TEXT PK
-• student_number TEXT FK→griffith_students.student_number
-• first_name TEXT  
-• last_name TEXT
-• email TEXT
+
+- id TEXT PK
+- student_number TEXT FK→griffith_students.student_number
+- first_name TEXT
+- last_name TEXT
+- email TEXT
 
 clubs
-• id TEXT PK
-• name TEXT
-• acronym TEXT
+
+- id TEXT PK
+- name TEXT
+- acronym TEXT
 
 club_members
-• id int8 PK
-• campus_user int8 FK→campus_users.id
-• club int8 FK→clubs.id
-• executive BOOL
+
+- id int8 PK
+- campus_user int8 FK→campus_users.id
+- club int8 FK→clubs.id
+- executive BOOL
 
 ---
 
 events
-• id UUID PK
-• name TEXT
-• description TEXT
-• host int8 FK→clubs.id
+
+- id UUID PK
+- name TEXT
+- description TEXT
+- host int8 FK→clubs.id
