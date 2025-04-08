@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { User } from "@supabase/supabase-js";
-import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 export function ProfileButton({ user }: { user: User }) {
   if (!user) return null;

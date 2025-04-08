@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
-import { User } from "./User";
 import { EditUserModal } from "./EditUserModal";
 import { AddUserModal } from "./AddUserModal";
 import { useUsers } from "../hooks/useUsers";

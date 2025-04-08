@@ -11,7 +11,16 @@ import { toast } from "sonner";
 import { LoadingState } from "@/components/LoadingState";
 import { Skeleton } from "@/components/ui/skeleton";
 
-function StudentCard({ student }: { student: any }) {
+interface Student {
+  student_number: string;
+  first_name: string;
+  last_name: string;
+  campus_user_id: string;
+  campus_email: string;
+  discord_user_id: string;
+}
+
+function StudentCard({ student }: { student: Student }) {
   const isDiscordUser = !!student.discord_user_id;
   const isClubMember = !!student.campus_user_id;
 
@@ -50,7 +59,7 @@ function StudentCard({ student }: { student: any }) {
     };
 
     fetchClubList();
-  }, []);
+  }, [student.campus_user_id]);
 
   return (
     <Card className="shadow-sm rounded-md border border-gray-200 gap-2">
@@ -113,7 +122,7 @@ function StudentCard({ student }: { student: any }) {
 export default function StudentPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [students, setStudents] = useState<any[]>([]);
+  const [students, setStudents] = useState<Student[]>([]);
 
   const handleSearch = async () => {
     if (searchQuery.length <= 2) {
@@ -125,7 +134,7 @@ export default function StudentPage() {
 
     const supabase = createClient();
 
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("all_users")
       .select("*")
       .or(
