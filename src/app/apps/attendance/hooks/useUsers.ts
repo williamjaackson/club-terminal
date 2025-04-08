@@ -14,10 +14,9 @@ export function useUsers() {
       const supabase = createClient();
 
       // NO SYSTEM_USERS ANYMORE
-      const { data, error } = await supabase
-        .from("system_users")
-        .select("*")
-        .not("campus_user_id", "is", null);
+      const { data, error } = await supabase.from("campus_users").select("*");
+      console.log(data, error);
+      // .not("campus_user_id", "is", null);
 
       if (error) {
         console.error("Error fetching users:", error);
