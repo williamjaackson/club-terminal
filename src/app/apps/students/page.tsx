@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/lib/supabase/client";
 import { useState } from "react";
 import { toast } from "sonner";
+import { LoadingState } from "@/components/LoadingState";
 
 function StudentCard({ student }: { student: any }) {
   const isDiscordUser = !!student.discord_user_id;
@@ -59,12 +60,16 @@ function StudentCard({ student }: { student: any }) {
 
 export default function StudentPage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [students, setStudents] = useState<any[]>([]);
+
   const handleSearch = async () => {
     if (searchQuery.length <= 2) {
       toast.error("Search query must be at least 3 characters");
       return;
     }
+
+    setIsLoading(true);
 
     const supabase = createClient();
 
@@ -82,6 +87,8 @@ export default function StudentPage() {
     } else {
       toast.error("Error fetching students");
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -101,14 +108,18 @@ export default function StudentPage() {
         />
         <Button onClick={handleSearch}>Search</Button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {students.map((student) => (
-          <StudentCard
-            key={student.campus_user_id + student.discord_user_id}
-            student={student}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <LoadingState text="Loading students..." />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+          {students.map((student) => (
+            <StudentCard
+              key={student.campus_user_id + student.discord_user_id}
+              student={student}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
