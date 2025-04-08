@@ -95,19 +95,20 @@ export default function StudentPage() {
     <div className="space-y-2">
       <h1 className="text-2xl font-bold mb-2">Student</h1>
       <Label>Discord User ID / Student Number / Name / Campus User ID</Label>
-      <div className="flex gap-2">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearch();
+        }}
+        className="flex gap-2"
+      >
         <Input
           placeholder="Search query..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                  handleSearch();
-              }
-          }}
         />
-        <Button onClick={handleSearch}>Search</Button>
-      </div>
+        <Button type="submit">Search</Button>
+      </form>
       {isLoading ? (
         <LoadingState text="Loading students..." />
       ) : (
