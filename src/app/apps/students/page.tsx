@@ -93,6 +93,11 @@ export default function StudentPage() {
           placeholder="Search query..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                  handleSearch();
+              }
+          }}
         />
         <Button onClick={handleSearch}>Search</Button>
       </div>
