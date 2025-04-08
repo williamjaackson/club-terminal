@@ -6,13 +6,51 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/lib/supabase/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { LoadingState } from "@/components/LoadingState";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function StudentCard({ student }: { student: any }) {
   const isDiscordUser = !!student.discord_user_id;
   const isClubMember = !!student.campus_user_id;
+
+  const [clubList, setClubList] = useState<string[]>([]);
+  const [isClubLoading, setIsClubLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchClubList = async () => {
+      setIsClubLoading(true);
+      const supabase = createClient();
+
+      const { data, error } = await supabase
+        .from("campus_members")
+        .select("*")
+        .eq("campus_user_id", student.campus_user_id);
+
+      if (data) {
+        const clubs: string[] = [];
+
+        for (const club of data) {
+          if (club.club_id === "24237") {
+            clubs.push("Gold Coast");
+          } else if (club.club_id === "24236") {
+            clubs.push("Brisbane/Online");
+          }
+        }
+
+        setClubList(clubs);
+      } else {
+        toast.error("Error fetching club list", {
+          description: error?.message,
+        });
+      }
+
+      setIsClubLoading(false);
+    };
+
+    fetchClubList();
+  }, []);
 
   return (
     <Card className="shadow-sm rounded-md border border-gray-200 gap-2">
@@ -32,7 +70,21 @@ function StudentCard({ student }: { student: any }) {
         <div className="grid gap-2">
           {isClubMember && (
             <div>
-              <Badge variant="red">Club Member</Badge>
+              <div className="flex gap-2 align-middle">
+                <Badge variant="red">Club Member</Badge>
+                {isClubLoading ? (
+                  <Skeleton className="w-30 h-5" />
+                ) : (
+                  clubList.map((club) => (
+                    <Badge
+                      key={club + student.campus_user_id}
+                      variant="secondary"
+                    >
+                      {club}
+                    </Badge>
+                  ))
+                )}
+              </div>
               <div className="flex gap-2 align-middle">
                 <p className="font-bold">
                   {student.first_name} {student.last_name}
@@ -81,7 +133,6 @@ export default function StudentPage() {
       );
     // .eq("discord_user_id", searchQuery);
 
-    console.log(data, error);
     if (data) {
       setStudents(data);
     } else {
