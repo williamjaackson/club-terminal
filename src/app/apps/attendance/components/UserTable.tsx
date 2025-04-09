@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -21,6 +21,17 @@ export function UserTable() {
   const { users, isLoading } = useUsers();
   const [searchQuery, setSearchQuery] = useState("");
   const [checkedIn, setCheckedIn] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const checkedIn = localStorage.getItem("checkedIn");
+    if (checkedIn) {
+      setCheckedIn(new Set(JSON.parse(checkedIn)));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("checkedIn", JSON.stringify(Array.from(checkedIn)));
+  }, [checkedIn]);
 
   const filteredUsers = users.filter((user) => {
     const searchLower = searchQuery.toLowerCase();
