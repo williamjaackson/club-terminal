@@ -63,6 +63,26 @@ export function UserTable() {
     );
   };
 
+  const exportAttendance = () => {
+    // build a csv file with the users data
+    const csv = filteredUsers
+      .map(
+        (user) =>
+          `${user.first_name},${user.last_name},${user.student_number},${
+            user.campus_user_id
+          },${
+            checkedIn.has(user.campus_user_id) ? "Checked in" : "Checked out"
+          }`
+      )
+      .join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "attendance.csv";
+    a.click();
+  };
+
   if (isLoading) {
     return <LoadingState text="Loading users..." />;
   }
@@ -76,7 +96,12 @@ export function UserTable() {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="max-w-sm"
         />
-        <AddUserModal />
+        <div className="flex gap-2">
+          <Button variant="default" onClick={exportAttendance}>
+            Export Attendance
+          </Button>
+          <AddUserModal />
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>
