@@ -36,7 +36,7 @@ export function UserTable() {
   const filteredUsers = users.filter((user) => {
     const searchLower = searchQuery.toLowerCase();
     return (
-      user.student_number.toLowerCase().includes(searchLower) ||
+      user.student_number?.toLowerCase().includes(searchLower) ||
       `${user.first_name} ${user.last_name}`.toLowerCase().includes(searchLower)
     );
   });
