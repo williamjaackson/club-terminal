@@ -27,7 +27,9 @@ export function EditUserModal({ user }: EditUserModalProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">Edit</Button>
+        <Button variant="ghost" disabled={true}>
+          Edit
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

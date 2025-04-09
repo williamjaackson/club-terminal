@@ -24,7 +24,9 @@ export function AddUserModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add User</Button>
+        <Button variant="outline" disabled={true}>
+          Add User
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
