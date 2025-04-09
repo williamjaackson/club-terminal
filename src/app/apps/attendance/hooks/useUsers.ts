@@ -15,7 +15,6 @@ export function useUsers() {
 
       // NO SYSTEM_USERS ANYMORE
       const { data, error } = await supabase.from("campus_users").select("*");
-      console.log(data, error);
       // .not("campus_user_id", "is", null);
 
       if (error) {
