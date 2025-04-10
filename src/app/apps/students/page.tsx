@@ -68,13 +68,6 @@ function StudentCard({ student }: { student: Student }) {
           {student.student_number ?? "UNDEFINED"}
         </CardTitle>
       </CardHeader>
-      {/* {isClubMember && (
-        <CardHeader>
-          <CardTitle>
-            {student.first_name} {student.last_name}
-          </CardTitle>
-        </CardHeader>
-      )} */}
       <CardContent>
         <div className="grid gap-2">
           {isClubMember && (
@@ -140,7 +133,6 @@ export default function StudentPage() {
       .or(
         `discord_user_id.ilike.%${searchQuery}%,student_number.ilike.%${searchQuery}%,first_name.ilike.%${searchQuery}%,last_name.ilike.%${searchQuery}%,campus_user_id.ilike.%${searchQuery}%`
       );
-    // .eq("discord_user_id", searchQuery);
 
     if (data) {
       setStudents(data);
