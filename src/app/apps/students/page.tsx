@@ -33,17 +33,17 @@ function StudentCard({ student }: { student: Student }) {
       const supabase = createClient();
 
       const { data, error } = await supabase
-        .from("campus_members")
+        .from("ClubMember")
         .select("*")
-        .eq("campus_user_id", student.campus_user_id);
+        .eq("campus_user", student.campus_user_id);
 
       if (data) {
         const clubs: string[] = [];
 
         for (const club of data) {
-          if (club.club_id === "24237") {
+          if (club.club === "24237") {
             clubs.push("Gold Coast");
-          } else if (club.club_id === "24236") {
+          } else if (club.club === "24236") {
             clubs.push("Brisbane/Online");
           }
         }

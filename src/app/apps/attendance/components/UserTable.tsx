@@ -57,8 +57,8 @@ export function UserTable() {
     }
     toast(
       `${checkedIn.has(userId) ? "Checked out" : "Checked in"} ${
-        users.find((user) => user.campus_user_id === userId)?.first_name
-      } ${users.find((user) => user.campus_user_id === userId)?.last_name}`,
+        users.find((user) => user.id === userId)?.first_name
+      } ${users.find((user) => user.id === userId)?.last_name}`,
       {}
     );
   };
@@ -69,10 +69,8 @@ export function UserTable() {
       .map(
         (user) =>
           `${user.first_name},${user.last_name},${user.student_number},${
-            user.campus_user_id
-          },${
-            checkedIn.has(user.campus_user_id) ? "Checked in" : "Checked out"
-          }`
+            user.id
+          },${checkedIn.has(user.id) ? "Checked in" : "Checked out"}`
       )
       .join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
@@ -115,18 +113,18 @@ export function UserTable() {
           </TableHeader>
           <TableBody>
             {filteredUsers.map((user) => (
-              <TableRow key={user.campus_user_id}>
+              <TableRow key={user.id}>
                 <TableCell className="font-medium">
                   {user.first_name} {user.last_name}
                 </TableCell>
                 <TableCell>{user.student_number}</TableCell>
-                <TableCell>{user.campus_user_id}</TableCell>
+                <TableCell>{user.id}</TableCell>
                 <TableCell className="flex gap-2 justify-end">
                   <EditUserModal user={user} />
-                  {checkedIn.has(user.campus_user_id) ? (
+                  {checkedIn.has(user.id) ? (
                     <Button
                       variant="default"
-                      onClick={() => toggleCheckIn(user.campus_user_id)}
+                      onClick={() => toggleCheckIn(user.id)}
                       className="w-24"
                     >
                       Check Out
@@ -134,7 +132,7 @@ export function UserTable() {
                   ) : (
                     <Button
                       variant="outline"
-                      onClick={() => toggleCheckIn(user.campus_user_id)}
+                      onClick={() => toggleCheckIn(user.id)}
                       className="w-24"
                     >
                       Check In

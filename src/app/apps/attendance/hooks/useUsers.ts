@@ -13,7 +13,7 @@ export function useUsers() {
       setIsLoading(true);
       const supabase = createClient();
 
-      const { data, error } = await supabase.from("campus_users").select("*");
+      const { data, error } = await supabase.from("CampusUser").select("*");
 
       if (error) {
         console.error("Error fetching users:", error);
