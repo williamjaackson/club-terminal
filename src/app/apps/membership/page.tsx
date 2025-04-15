@@ -130,7 +130,7 @@ export default function MembershipPage() {
       <ChartContainer
         config={{
           label: { label: "Membership Growth" },
-          color: { color: "#8884d8" },
+          color: { color: "#ff0000" },
         }}
       >
         <ResponsiveContainer width="100%" height={400}>
@@ -147,7 +147,7 @@ export default function MembershipPage() {
             <Line
               type="monotone"
               dataKey="members"
-              stroke="#8884d8"
+              stroke="#ff0000"
               strokeWidth={2}
               dot={false}
             />
