@@ -70,7 +70,7 @@ export function UserTable() {
         (user) =>
           `${user.first_name},${user.last_name},${user.student_number},${
             user.id
-          },${checkedIn.has(user.id) ? "Checked in" : "Checked out"}`
+          },${checkedIn.has(user.id) ? "true" : "false"}`
       )
       .join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
