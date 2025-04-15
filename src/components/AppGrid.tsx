@@ -23,17 +23,17 @@ const apps = [
     disabled: false,
   },
   {
+    name: "Growth",
+    icon: ChartLine,
+    href: "/growth",
+    description: "Manage membership information",
+    disabled: false,
+  },
+  {
     name: "Students",
     icon: User,
     href: "/students",
     description: "Manage/Query student information",
-    disabled: false,
-  },
-  {
-    name: "Membership",
-    icon: ChartLine,
-    href: "/membership",
-    description: "Manage membership information",
     disabled: false,
   },
   {

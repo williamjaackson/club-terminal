@@ -19,7 +19,7 @@ interface MembershipChartProps {
   }>;
 }
 
-export function MembershipChart({ data }: MembershipChartProps) {
+export function GrowthChart({ data }: MembershipChartProps) {
   return (
     <ChartContainer
       config={{

@@ -2,9 +2,11 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
 import { LoadingState } from "@/components/LoadingState";
-import { MembershipChart } from "./MembershipChart";
+import { GrowthChart } from "./GrowthChart";
 
 export default async function MembershipPage() {
+  const clubStarted = new Date("2025-02-18");
+
   const supabase = createServerComponentClient({ cookies });
 
   const { data, error } = await supabase
@@ -23,7 +25,11 @@ export default async function MembershipPage() {
   data.forEach((entry: any) => {
     let signupDate = new Date(entry.signup_date);
 
-    if (isNaN(signupDate.getTime()) || signupDate > now) {
+    if (
+      isNaN(signupDate.getTime()) ||
+      signupDate > now ||
+      signupDate < clubStarted
+    ) {
       const [year, day, month] = entry.signup_date.split("-");
       const reformattedDate = `${year}-${month}-${day}`;
       const alternativeDate = new Date(reformattedDate);
@@ -31,6 +37,20 @@ export default async function MembershipPage() {
       if (!isNaN(alternativeDate.getTime()) && alternativeDate <= now) {
         brokenMembers++;
         entry.signup_date = reformattedDate;
+      }
+
+      // check if the new signup date is outside the window
+      if (
+        new Date(entry.signup_date) > now ||
+        new Date(entry.signup_date) < clubStarted
+      ) {
+        // give them a random date between the first member and now
+        entry.signup_date = new Date(
+          Math.random() * (now.getTime() - clubStarted.getTime()) +
+            clubStarted.getTime()
+        )
+          .toISOString()
+          .split("T")[0];
       }
     }
   });
@@ -81,11 +101,11 @@ export default async function MembershipPage() {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Membership Growth</h1>
       <Suspense fallback={<LoadingState text="Loading chart..." />}>
-        <MembershipChart data={processedData} />
+        <GrowthChart data={processedData} />
       </Suspense>
       <span className="text-sm text-gray-500 text-center">
-        {brokenMembers} members are outside the window, and have been corrected.
-        As the window expands they become less accurate.
+        {brokenMembers} members are outside the window and have been placed
+        randomly.
       </span>
     </div>
   );
