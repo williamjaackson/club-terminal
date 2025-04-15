@@ -91,6 +91,10 @@ export default function MembershipPage() {
         const firstDate = new Date(uniqueData[0].signup_date);
         const lastDate = new Date(); // Use current date instead of last signup
 
+        // Adjust firstDate to January 1st of its year
+        firstDate.setMonth(0);
+        firstDate.setDate(1);
+
         // Create array of all dates between first signup and now
         const processedData = [];
         const currentDate = new Date(firstDate);
