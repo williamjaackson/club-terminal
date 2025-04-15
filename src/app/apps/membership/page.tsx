@@ -139,9 +139,18 @@ export default function MembershipPage() {
             <XAxis
               dataKey="date"
               label={{ value: "Date", position: "bottom" }}
+              tickFormatter={(date) => {
+                const d = new Date(date);
+                // Only show label if it's the first day of the month
+                return d.getDate() === 1
+                  ? d.toLocaleString("default", { month: "short" })
+                  : "";
+              }}
+              interval={0}
             />
             <YAxis
               label={{ value: "Total Members", angle: -90, position: "left" }}
+              domain={[0, "dataMax"]}
             />
             <Tooltip />
             <Line
