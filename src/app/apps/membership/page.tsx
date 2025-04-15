@@ -15,6 +15,7 @@ import { ChartContainer } from "@/components/ui/chart";
 
 export default function MembershipPage() {
   const [isLoading, setIsLoading] = useState(true);
+  const [brokenMembers, setBrokenMembers] = useState(0);
   const { supabase, loading } = useAuth();
   const [membershipData, setMembershipData] = useState<any[]>([]);
 
@@ -32,6 +33,7 @@ export default function MembershipPage() {
       } else {
         // Log any members with invalid dates and try alternative format
         const now = new Date();
+        let brokenMembers = 0;
         data.forEach((entry: any) => {
           let signupDate = new Date(entry.signup_date);
 
@@ -43,11 +45,7 @@ export default function MembershipPage() {
             const alternativeDate = new Date(reformattedDate);
 
             if (!isNaN(alternativeDate.getTime()) && alternativeDate <= now) {
-              console.log("Fixed member date by using YYYY-DD-MM format:", {
-                user: entry.campus_user,
-                original_date: entry.signup_date,
-                fixed_date: reformattedDate,
-              });
+              brokenMembers++;
               // Update the entry with the correct date format
               entry.signup_date = reformattedDate;
             } else {
@@ -115,6 +113,7 @@ export default function MembershipPage() {
           currentDate.setDate(currentDate.getDate() + 1);
         }
 
+        setBrokenMembers(brokenMembers);
         setMembershipData(processedData);
       }
 
@@ -167,6 +166,10 @@ export default function MembershipPage() {
           </LineChart>
         </ResponsiveContainer>
       </ChartContainer>
+      <span className="text-sm text-gray-500 text-center">
+        {brokenMembers} members are outside the window, and have been corrected.
+        As the window expands they become less accurate.
+      </span>
     </div>
   );
 }
