@@ -12,14 +12,14 @@ import {
 } from "recharts";
 import { ChartContainer } from "@/components/ui/chart";
 
-interface MembershipChartProps {
+interface GrowthChartProps {
   data: Array<{
     date: string;
     members: number;
   }>;
 }
 
-export function GrowthChart({ data }: MembershipChartProps) {
+export function GrowthChart({ data }: GrowthChartProps) {
   return (
     <ChartContainer
       config={{
