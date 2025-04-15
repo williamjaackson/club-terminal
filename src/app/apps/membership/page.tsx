@@ -1,8 +1,8 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { MembershipChart } from "./MembershipChart";
 import { Suspense } from "react";
 import { LoadingState } from "@/components/LoadingState";
+import { MembershipChart } from "./MembershipChart";
 
 export default async function MembershipPage() {
   const supabase = createServerComponentClient({ cookies });
@@ -80,7 +80,9 @@ export default async function MembershipPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Membership Growth</h1>
-      <MembershipChart data={processedData} />
+      <Suspense fallback={<LoadingState text="Loading chart..." />}>
+        <MembershipChart data={processedData} />
+      </Suspense>
       <span className="text-sm text-gray-500 text-center">
         {brokenMembers} members are outside the window, and have been corrected.
         As the window expands they become less accurate.
