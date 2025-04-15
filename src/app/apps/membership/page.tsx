@@ -30,6 +30,42 @@ export default function MembershipPage() {
       if (error) {
         console.error("Error fetching membership data:", error);
       } else {
+        // Log any members with invalid dates and try alternative format
+        const now = new Date();
+        data.forEach((entry: any) => {
+          let signupDate = new Date(entry.signup_date);
+
+          // If the date is invalid or in the future, try YYYY-DD-MM format
+          if (isNaN(signupDate.getTime()) || signupDate > now) {
+            // Try parsing as YYYY-DD-MM
+            const [year, day, month] = entry.signup_date.split("-");
+            const reformattedDate = `${year}-${month}-${day}`;
+            const alternativeDate = new Date(reformattedDate);
+
+            if (!isNaN(alternativeDate.getTime()) && alternativeDate <= now) {
+              console.log("Fixed member date by using YYYY-DD-MM format:", {
+                user: entry.campus_user,
+                original_date: entry.signup_date,
+                fixed_date: reformattedDate,
+              });
+              // Update the entry with the correct date format
+              entry.signup_date = reformattedDate;
+            } else {
+              console.log(
+                "Member with suspicious signup date (failed both formats):",
+                {
+                  user: entry.campus_user,
+                  signup_date: entry.signup_date,
+                  attempted_fix: reformattedDate,
+                  issue: isNaN(signupDate.getTime())
+                    ? "Invalid date format"
+                    : "Future date",
+                }
+              );
+            }
+          }
+        });
+
         // Create a map to keep track of unique users and their earliest signup date
         const uniqueUsers = new Map();
         data.forEach((entry: any) => {
