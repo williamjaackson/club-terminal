@@ -1,4 +1,10 @@
-import { CalendarDays, Users, ArrowRightLeft, User } from "lucide-react";
+import {
+  CalendarDays,
+  Users,
+  ArrowRightLeft,
+  User,
+  ChartLine,
+} from "lucide-react";
 import Link from "next/link";
 
 const apps = [
@@ -21,6 +27,13 @@ const apps = [
     icon: User,
     href: "/students",
     description: "Manage/Query student information",
+    disabled: false,
+  },
+  {
+    name: "Membership",
+    icon: ChartLine,
+    href: "/membership",
+    description: "Manage membership information",
     disabled: false,
   },
   {
